@@ -10,33 +10,49 @@ public class SmartCalculator {
         Scanner scanner = new Scanner(System.in);
         String input;
         String[] arr;
-        int c;
         int a,b;
         do{
             input = scanner.nextLine();
             arr = input.split(" ");
-            if (arr.length == 2){
-                try{
-                    a = Integer.parseInt(arr[0]);
-                    b = Integer.parseInt(arr[1]);
-                    System.out.println(a+b);
-                }catch(NumberFormatException nfe){
-                    //nothing happens
-                }
-            }else if(arr.length == 1){
+            
+            // checking for keywords or case of single input
+            if(arr.length == 1){
                 if(input.equals("/exit")){
                     System.out.println("Bye!");
                     break;
+                }else if(input.equals("/help")){
+                    System.out.println("The program calculates the sum of numbers");
                 }else{
                     try{
                     a = Integer.parseInt(arr[0]);
                     System.out.println(a);
                 }catch(NumberFormatException nfe){
-                    //nothing happens
+                    //nothing happens for now if there are string inputs
                 }
+                }
+            }else{
+                int[] numbers = new int[arr.length];//create an array in which we're going to put the string parsed to integers
+                boolean allok = true;
+                for (int i = 0; i<arr.length; i++ ){
+                    try{
+                        numbers[i] = Integer.parseInt(arr[i]);
+                    }catch(NumberFormatException nfe){
+                        allok = false;
+                        //nothing happens for now if there are string inputs
+                    }
+                }
+                
+                if (allok==true){
+                    int sum=0;
+                    for(int number:numbers){
+                        sum+=number;
+                    }
+                    System.out.println(sum);
                 }
             }
-        }while (!input.equals("/exit"));   
+        }while (!input.equals("/exit"));  
+        
+        scanner.close(); 
     }
     }
     
